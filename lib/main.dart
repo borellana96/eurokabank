@@ -1,3 +1,4 @@
+import 'package:eureka_bank/pages/transfer_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:eureka_bank/pages/login_page.dart';
@@ -15,10 +16,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Eureka Bank',
-      initialRoute: 'menu',
+      initialRoute: 'login',
       routes: {
-        'login' : (BuildContext context) => LoginPage(),
-        'menu'  : (BuildContext context) => MenuPage()
+        'login'     : (BuildContext context) => LoginPage(),
+        'menu'      : (BuildContext context) => MenuPage(),
+        'transfer'  : (BuildContext context) => TransferPage()
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

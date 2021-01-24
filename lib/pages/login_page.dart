@@ -1,3 +1,4 @@
+import 'package:eureka_bank/pages/menu_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,13 +24,11 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text("EurekaBank",
-                style: TextStyle(fontSize: 24, color: Colors.black54)
-              ),
+                  style: TextStyle(fontSize: 24, color: Colors.black54)),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 20.0),
-                child: Image.asset("assets/banking_service-512.png",
-                width: 180)
-              ),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: Image.asset("assets/banking_service-512.png",
+                      width: 180)),
               SizedBox(
                 height: 20,
               ),
@@ -54,14 +53,14 @@ class _LoginPageState extends State<LoginPage> {
       width: 265,
       child: TextField(
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0), //Borde de la caja
-          ),
-          prefixIcon: Icon(Icons.perm_identity, size: 24), //Icono al inicio de la caja
-          hintText: "Usuario", //Placeholder de una web
-          isDense: true, // Added this
-          contentPadding: EdgeInsets.symmetric(vertical: 0)
-        ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0), //Borde de la caja
+            ),
+            prefixIcon: Icon(Icons.perm_identity,
+                size: 24), //Icono al inicio de la caja
+            hintText: "Usuario", //Placeholder de una web
+            isDense: true, // Added this
+            contentPadding: EdgeInsets.symmetric(vertical: 0)),
         onChanged: (valor) {
           setState(() {
             _id = valor;
@@ -77,13 +76,13 @@ class _LoginPageState extends State<LoginPage> {
       child: TextField(
         obscureText: true,
         decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0), //Borde de la caja
-          ),
-          prefixIcon: Icon(Icons.lock), //Icono al inicio de la caja
-          hintText: "Contraseña", //Placeholder de una web
-          isDense: true, // Added this
-          contentPadding: EdgeInsets.all(0)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0), //Borde de la caja
+            ),
+            prefixIcon: Icon(Icons.lock), //Icono al inicio de la caja
+            hintText: "Contraseña", //Placeholder de una web
+            isDense: true, // Added this
+            contentPadding: EdgeInsets.all(0)),
         onChanged: (valor) {
           setState(() {
             _contrasena = valor;
@@ -123,5 +122,9 @@ class _LoginPageState extends State<LoginPage> {
 
   void verificarLogin() {
     print("GO");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MenuPage()),
+    );
   }
 }
