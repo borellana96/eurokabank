@@ -61,7 +61,7 @@ class MenuPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ), //Servicios
             SizedBox(height: 30),
             Container(
               width: 300,
@@ -70,18 +70,18 @@ class MenuPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white, //color de fondo
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10)
+                ),
                 boxShadow: [
-                  BoxShadow(
-                    //sombrilla
+                  BoxShadow( 
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: Offset(0, 3),
-                  ),
+                  ), //sombrilla
                 ],
               ),
               child: Column(
@@ -100,7 +100,7 @@ class MenuPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ), //Últimos movimientos
           ],
         ),
       ),
@@ -179,7 +179,8 @@ class MenuPage extends StatelessWidget {
                     );
                   }
                 },
-                color: Color.fromRGBO(92, 162, 175, 1)),
+                color: Color.fromRGBO(92, 162, 175, 1)
+            ),
           ),
           Text(tituloBoton,
               textAlign: TextAlign.center, style: TextStyle(fontSize: 11))
