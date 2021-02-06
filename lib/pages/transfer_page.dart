@@ -11,14 +11,15 @@ class _TransferPageState extends State<TransferPage> {
   String _cuentaDestino = "";
   String _monto = "";
   String _contrasena = "";
+  String _dropdownValue = "0020000002";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Color.fromRGBO(92, 162, 175, 1),
-        title: tituloTransfer()
+          centerTitle: true,
+          backgroundColor: Color.fromRGBO(92, 162, 175, 1),
+          title: tituloTransfer()
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 30.0),
@@ -104,7 +105,7 @@ class _TransferPageState extends State<TransferPage> {
 
     return Container(
       width: sizeH.width * 0.8,
-      height: sizeV.height * 0.35,
+      height: sizeV.height * 0.40,
       padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white, //color de fondo
@@ -142,8 +143,7 @@ class _TransferPageState extends State<TransferPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text("N° Cuenta Origen:", style: TextStyle(fontSize: 14)),
-          Text("0020000002",
-              style: TextStyle(fontSize: 12, color: Colors.black54)),
+          dropDown()
         ],
       ),
     );
@@ -252,9 +252,9 @@ class _TransferPageState extends State<TransferPage> {
       child: RaisedButton(
         elevation: 2.0,
         onPressed: () {
-          if(msjeBoton == "Cancelar"){
+          if (msjeBoton == "Cancelar") {
             print("Cancelar");
-          }else{
+          } else {
             print("Transferir");
           }
         },
@@ -271,6 +271,30 @@ class _TransferPageState extends State<TransferPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget dropDown() {
+    return DropdownButton<String>(
+      value: _dropdownValue,
+      elevation: 16,
+      style: TextStyle(color: Colors.black54, fontSize: 14),
+      underline: Container(
+        height: 2,
+        color: Color.fromRGBO(92, 162, 175, 1),
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          _dropdownValue = newValue;
+        });
+      },
+      items: <String>['0020000002', '0020000003', '0020000004']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
     );
   }
 }
