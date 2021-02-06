@@ -1,3 +1,5 @@
+import 'package:eureka_bank/pages/accounts_page.dart';
+import 'package:eureka_bank/pages/movements_page.dart';
 import 'package:eureka_bank/pages/transfer_page.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +46,8 @@ class MenuPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        botonServicio(Icons.favorite, "Aperturar Cuenta", context),
+                        botonServicio(Icons.account_balance_wallet,
+                            "Ver Cuentas", context),
                         botonServicio(Icons.face, "Ver Perfil", context),
                       ],
                     ),
@@ -70,13 +73,12 @@ class MenuPage extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white, //color de fondo
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)
-                ),
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
                 boxShadow: [
-                  BoxShadow( 
+                  BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
@@ -157,7 +159,8 @@ class MenuPage extends StatelessWidget {
     );
   }
 
-  Widget botonServicio(IconData icon, String tituloBoton, BuildContext context) {
+  Widget botonServicio(
+      IconData icon, String tituloBoton, BuildContext context) {
     return Container(
       width: 100, //centrada de botones
       child: Column(
@@ -177,10 +180,14 @@ class MenuPage extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) => TransferPage()),
                     );
+                  } else if (icon == Icons.account_balance_wallet) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AccountsPage()),
+                    );
                   }
                 },
-                color: Color.fromRGBO(92, 162, 175, 1)
-            ),
+                color: Color.fromRGBO(92, 162, 175, 1)),
           ),
           Text(tituloBoton,
               textAlign: TextAlign.center, style: TextStyle(fontSize: 11))
