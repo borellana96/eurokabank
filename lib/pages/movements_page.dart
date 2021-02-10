@@ -1,7 +1,23 @@
+import 'package:eureka_bank/models/movement_model.dart';
+import 'package:eureka_bank/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 
-class MovementsPage extends StatelessWidget {
+class MovementsPage extends StatefulWidget {
   const MovementsPage({Key key}) : super(key: key);
+
+  @override
+  _MovementsPageState createState() => _MovementsPageState();
+}
+
+class _MovementsPageState extends State<MovementsPage> {
+  UserProvider userProvider = UserProvider();
+
+  @override
+  void initState() {
+    //Llamar a la api, antes de construirse los widget
+    userProvider.getMovements();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +33,17 @@ class MovementsPage extends StatelessWidget {
             SizedBox(height: 30),
             cardMyAmount(context),
             SizedBox(height: 40),
-            movimientos(context),
+            FutureBuilder(
+              future: userProvider.getMovements(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return movimientos(context, snapshot.data);
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -113,7 +139,7 @@ class MovementsPage extends StatelessWidget {
     );
   }
 
-  Widget movimientos(BuildContext context) {
+  Widget movimientos(BuildContext context, List<Movimiento> listaMovimientos) {
     final sizeH = MediaQuery.of(context).size;
     final sizeV = MediaQuery.of(context).size;
     return Container(
@@ -145,7 +171,7 @@ class MovementsPage extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: <Widget>[
-                    tablaMovimientos(),
+                    tablaMovimientos(listaMovimientos),
                   ],
                 )),
           ),
@@ -154,45 +180,45 @@ class MovementsPage extends StatelessWidget {
     );
   }
 
-  Widget tablaMovimientos() {
+  Widget tablaMovimientos(List<Movimiento> listaMovimientos) {
     return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        headingRowHeight: 20,
-        dataRowHeight: 30,
-        columnSpacing: 8,
-        horizontalMargin: 0,
-        columns: const <DataColumn>[
-          DataColumn(
-            label: Text(
-              'Fecha',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          headingRowHeight: 20,
+          dataRowHeight: 30,
+          columnSpacing: 8,
+          horizontalMargin: 0,
+          columns: const <DataColumn>[
+            DataColumn(
+              label: Text(
+                'Fecha',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          DataColumn(
-            label: Text(
-              'Descripción',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+            DataColumn(
+              label: Text(
+                'Descripción',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          DataColumn(
-            label: Text(
-              'Acción',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+            DataColumn(
+              label: Text(
+                'Acción',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          DataColumn(
-            label: Text(
-              'Importe',
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+            DataColumn(
+              label: Text(
+                'Importe',
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-        ],
-        rows: const <DataRow>[
+          ],
+          /* rows: const <DataRow>[
           DataRow(
             cells: <DataCell>[
               DataCell(Text('09/01/2008', style: TextStyle(fontSize: 11))),
@@ -202,26 +228,19 @@ class MovementsPage extends StatelessWidget {
               DataCell(Text('S/ 3800.00', style: TextStyle(fontSize: 11))),
             ],
           ),
-          DataRow(
-            cells: <DataCell>[
-              DataCell(Text('09/01/2008', style: TextStyle(fontSize: 11))),
-              DataCell(
-                  Text('Apertura de Cuenta', style: TextStyle(fontSize: 11))),
-              DataCell(Text('INGRESO', style: TextStyle(fontSize: 11))),
-              DataCell(Text('S/ 3800.00', style: TextStyle(fontSize: 11))),
-            ],
+        ], */
+          rows: listaMovimientos.map(
+            (itemRow) => DataRow(
+              cells: <DataCell>[
+                DataCell(Text("${itemRow.dttMovifecha}", style: TextStyle(fontSize: 11))),
+                DataCell(
+                    Text("${itemRow.tipoMovimiento.vchTipodescripcion}", style: TextStyle(fontSize: 11))),
+                DataCell(Text("${itemRow.tipoMovimiento.vchTipoaccion}", style: TextStyle(fontSize: 11))),
+                DataCell(Text("${itemRow.decMoviimporte}", style: TextStyle(fontSize: 11))),
+              ],
+            ),
           ),
-          DataRow(
-            cells: <DataCell>[
-              DataCell(Text('09/01/2008', style: TextStyle(fontSize: 11))),
-              DataCell(
-                  Text('Apertura de Cuenta', style: TextStyle(fontSize: 11))),
-              DataCell(Text('INGRESO', style: TextStyle(fontSize: 11))),
-              DataCell(Text('S/ 3800.00', style: TextStyle(fontSize: 11))),
-            ],
-          ),
-        ],
-      ),
+        )
     );
   }
 }
